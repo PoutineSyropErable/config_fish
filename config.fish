@@ -211,6 +211,41 @@ function fzfc
 	fzf -m --preview='feh {}' | c 
 end
 
+
+
+# fcd: No max depth restriction, supports hidden directories and wildcards
+function fcd
+    set search_term $argv[1]
+    set dir (fd -t d --hidden $search_term | fzf)
+    if test -n "$dir"
+        cd "$dir"
+    end
+end
+
+# fcd1: Restrict to max depth = 1, supports hidden directories and wildcards
+function fcd1
+    set search_term $argv[1]
+    set dir (fd -t d --hidden -d 1 $search_term | fzf)
+    if test -n "$dir"
+        cd "$dir"
+    end
+end
+
+# fcdn: Specify max depth, supports hidden directories and wildcards
+function fcdn
+    if test -z "$argv[1]"
+        echo "Usage: fcdn <max-depth> [wildcard]"
+        return 1
+    end
+    set depth $argv[1]
+    set search_term $argv[2]
+    set dir (fd -t d --hidden -d $depth $search_term | fzf)
+    if test -n "$dir"
+        cd "$dir"
+    end
+end
+
+
 alias pythonvenv="$HOME/MainPython_Virtual_Environment/pip_venv/bin/python"
 alias pv="pythonvenv"
 
@@ -269,12 +304,12 @@ alias ist="govenv ; speedtest-cli ;lvenv"
 #alias cd="z"
 # might break stuff idk. i'll keep it for now
 # alias v="z"
-alias eva="eza"
-alias ls="eza"
-alias ll='eza -alf'
-alias la='eza -a'
-alias l='eza -cf'
-alias lsdir='ls -d */'
+alias eva="lsd"
+alias ls="lsd"
+alias ll='lsd -alf'
+alias la='lsd -a'
+alias l='lsd -cf'
+alias lsdir='lsd -d */'
 
 
 #nu shell commands

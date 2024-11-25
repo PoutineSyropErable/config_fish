@@ -261,6 +261,41 @@ function fzfc
 	fzf -m --preview='feh {}' | c 
 end
 
+
+
+# fcd: No max depth restriction, supports hidden directories and wildcards
+function fcd
+    set search_term $argv[1]
+    set dir (fd -t d --hidden $search_term | fzf)
+    if test -n "$dir"
+        cd "$dir"
+    end
+end
+
+# fcd1: Restrict to max depth = 1, supports hidden directories and wildcards
+function fcd1
+    set search_term $argv[1]
+    set dir (fd -t d --hidden -d 1 $search_term | fzf)
+    if test -n "$dir"
+        cd "$dir"
+    end
+end
+
+# fcdn: Specify max depth, supports hidden directories and wildcards
+function fcdn
+    if test -z "$argv[1]"
+        echo "Usage: fcdn <max-depth> [wildcard]"
+        return 1
+    end
+    set depth $argv[1]
+    set search_term $argv[2]
+    set dir (fd -t d --hidden -d $depth $search_term | fzf)
+    if test -n "$dir"
+        cd "$dir"
+    end
+end
+
+
 alias pythonvenv="$HOME/MainPython_Virtual_Environment/pip_venv/bin/python"
 alias pv="pythonvenv"
 
@@ -319,12 +354,12 @@ alias ist="govenv ; speedtest-cli ;lvenv"
 #alias cd="z"
 # might break stuff idk. i'll keep it for now
 # alias v="z"
-alias eva="eza"
-alias ls="eza"
-alias ll='eza -alf'
-alias la='eza -a'
-alias l='eza -cf'
-alias lsdir='ls -d */'
+alias eva="lsd"
+alias ls="lsd"
+alias ll='lsd -alf'
+alias la='lsd -a'
+alias l='lsd -cf'
+alias lsdir='lsd -d */'
 
 
 #nu shell commands
@@ -333,28 +368,31 @@ alias nls="nu -c 'ls'"
 
 
 alias ch='cd ~'
-alias cr="cd ~/.config/rofi"
+alias cco="cd ~/.config"
 alias ce="cd ~/.config/eww"
-alias cm="cd ~/Music"
-alias cP="cd ~/.config/polybar.old/"
-alias cw="cd ~/.config/waybar"
+alias cir="cd ~/.config/fish"
+alias cH="cd ~/.config/hypr"
+alias chy="cd ~/.config/hypr"
+alias cir="cd ~/.config/ironbar"
+alias ck="cd ~/.config/kanata"
 alias cka="cd ~/.config/kanata"
 alias cki="cd ~/.config/kitty"
-alias cir="cd ~/.config/ironbar"
-alias cH="cd ~/.config/hypr"
-alias cS="cd ~/.config/systemd"
-alias cpi="cd ~/Pictures"
 alias clf="cd ~/.config/lf"
-alias chy="cd ~/.config/hypr"
-alias cdoc="cd ~/Documents"
-alias cdo="cd ~/Downloads"
-alias cco="cd ~/.config"
-alias ck="cd ~/.config/kanata"
-alias ct="cd ~/.local/share/Trash/files"
+alias cP="cd ~/.config/polybar.old/"
+alias cr="cd ~/.config/rofi"
+alias cS="cd ~/.config/systemd"
 alias ctm="cd ~/.config/tmux"
-alias chg=" cd ~/home_for_git"
-alias cs9="cd ~ ; cd sem9"
+alias cw="cd ~/.config/waybar"
 
+
+alias ct="cd ~/.local/share/Trash/files"
+
+alias cs9="cd ~ ; cd sem9"
+alias cdo="cd ~/Downloads"
+alias cdoc="cd ~/Documents"
+alias cm="cd ~/Music"
+alias cpi="cd ~/Pictures"
+alias chg=" cd ~/home_for_git"
 
 alias kmux="tmux kill-server"
 alias lmux="tmux detach"

@@ -10,6 +10,12 @@ atuin init fish --disable-up-arrow | source
 source ~/.config/lf/lf.fish
 
 
+# Alias to enable core dumps and set core dump pattern
+function c_debug
+    ulimit -c unlimited
+    echo "core.%e.%p" | sudo tee /proc/sys/kernel/core_pattern
+end
+
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -26,6 +32,7 @@ export HYPRSHOT_DIR="$HOME/Pictures/Screenshots"
 # You need to also export this in whatever code runs this
 
 
+alias bottom="btm"
 alias timeshift-wayland="sudo -E timeshift-gtk"
 alias cd="z"
 alias j="z"
@@ -48,6 +55,7 @@ alias gfd="git_file_diff"
 alias gpd="git push origin desktop"
 alias gpl="git push origin laptop"
 alias gpm="git push origin master"
+alias gpmn="git push origin main"
 
 function gcl
 	cd ~/.config
@@ -59,6 +67,24 @@ function gcd
 	cd ~/.config
 	git checkout desktop
 	cd -
+end
+
+
+function git_push_all
+    # Commit and push changes in submodules
+    echo "Processing all submodules..."
+    git submodule foreach --recursive '
+        echo "Updating submodule $name..."
+        git add .
+        git commit -m "super push, root git dir and all submodules" || echo "No changes to commit in $name"
+        git push origin $(git branch --show-current)
+    '
+
+    # Commit and push changes in the current repository
+    echo "Processing the current repository..."
+    git add .
+    git commit -m "super push, root git dir and all submodules" || echo "No changes to commit in the root repository"
+    git push origin (git branch --show-current)
 end
 
 
@@ -304,12 +330,15 @@ alias ist="govenv ; speedtest-cli ;lvenv"
 #alias cd="z"
 # might break stuff idk. i'll keep it for now
 # alias v="z"
-alias eva="lsd"
+alias ols="/usr/bin/ls"
+alias ols="/usr/bin/e"
+alias eva="eza"
 alias ls="lsd"
 alias ll='lsd -alf'
 alias la='lsd -a'
 alias l='lsd -cf'
 alias lsdir='lsd -d */'
+alias lsa="lsd -a"
 
 
 #nu shell commands
@@ -429,6 +458,9 @@ alias pwv="cd (p)"
 alias p="paste"
 alias prevc="history --max=1 | c"
 
+function fc 
+	cat $argv | c 
+end
 
 
 

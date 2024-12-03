@@ -66,7 +66,7 @@ end
 
 function git_push_all
     # Commit and push changes in submodules
-    printf "Processing all submodules...\n\n"
+    printf -- "Processing all submodules...\n\n"
     git submodule foreach --recursive '
         echo "Updating submodule $name..."
         git add .
@@ -91,7 +91,7 @@ alias gpl="git push origin laptop"
 alias gpm="git push origin master"
 alias gpmn="git push origin main"
 
-alias gpa=git_push_all
+alias gpa="git_push_all"
 
 
 #---------------------------------END OF GIT----------------------

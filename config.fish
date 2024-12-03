@@ -64,23 +64,40 @@ function gcd
 end
 
 
-function git_push_all
+
+
+function git_push_all_msg
+    # Check if a commit message is provided
+    if test (count $argv) -eq 0
+        echo "Error: Commit message is required."
+        return 1
+    end
+
+    # Extract the commit message
+    set commit_message "$argv"
+
     # Commit and push changes in submodules
-    printf "Processing all submodules...\n"
-	printf "________________________________\n\n"
+    printf -- "Processing all submodules...\n"
+    printf -- "________________________________\n\n"
     git submodule foreach --recursive '
         echo "Updating submodule $name..."
-        git add .
-        git commit -m "super push, root git dir and all submodules" || echo "No changes to commit in $name"
+        git add --all
+        git commit -m "'"$commit_message"'" || echo "No changes to commit in $name"
         git push origin $(git branch --show-current)
-		printf -- "________________________________\n\n"
+        printf -- "________________________________\n\n"
     '
 
     # Commit and push changes in the current repository
     echo "Processing the current repository..."
-    git add .
-    git commit -m "super push, root git dir and all submodules" || echo "No changes to commit in the root repository"
+    git add --all
+    git commit -m "$commit_message" || echo "No changes to commit in the root repository"
     git push origin (git branch --show-current)
+end
+
+
+function git_push_all
+    # Call git_push_all_msg with the old hardcoded commit message
+    git_push_all_msg "super push, root git dir and all submodules"
 end
 
 alias gcm="gc"
@@ -92,6 +109,7 @@ alias gpl="git push origin laptop"
 alias gpm="git push origin master"
 alias gpmn="git push origin main"
 
+alias gpam="git_push_all_msg"
 alias gpa="git_push_all"
 
 

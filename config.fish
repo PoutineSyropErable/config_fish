@@ -152,10 +152,20 @@ alias execpl="execpl_disown"
 
 
 alias svim="sudo -E nvim"
+alias nano="nvim"
+function sudo
+    if test (count $argv) -gt 0 -a $argv[1] = "nano"
+        command sudo -E nvim $argv[2..-1]
+    else
+        command sudo $argv
+    end
+end
+
+
+
 alias ovim="/usr/bin/vim"
 alias vim="nvim"
-alias nano="nvim"
-alias v="vim"
+alias v="nvim"
 
 alias slf="sudo -E lf"
 alias fmod="vim ~/.config/fish/config.fish"
@@ -227,10 +237,10 @@ alias find_package="package_finder"
 
 alias findr="sudo find / -name "
 alias findi="sudo find / -lname "
-#alias sudo nano="svim"
 function findc
 	find . -iname "*$argv*"
 end
+
 
 
 

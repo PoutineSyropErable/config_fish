@@ -66,8 +66,8 @@ end
 
 function git_push_all
     # Commit and push changes in submodules
-    printf -- "Processing all submodules...\n"
-	printf -- "________________________________\n\n"
+    printf "Processing all submodules...\n"
+	printf "________________________________\n\n"
     git submodule foreach --recursive '
         echo "Updating submodule $name..."
         git add .

@@ -99,6 +99,56 @@ function execp
     nohup $argv >> /dev/null &
 end
 
+function execpl_disown
+    mkdir -p $HOME/.config/execp_logs
+    set log_file "$HOME/.config/execp_logs/$argv[1].log"
+
+    # Append a timestamp to separate log entries
+    printf "\n\n--------------------(%s)--------------------\n\n" (date) >> "$log_file"
+
+    # Use 'begin; end' block to ensure arguments are passed correctly and execute in parallel
+    begin
+        $argv >> "$log_file" 2>&1 &
+    end
+
+    # Disown the background job
+    disown
+end
+
+
+#These are possible ways, but they are somewhat wrong. Just for myself/educational purposes when ill forget
+function execpl_setsid
+    mkdir -p $HOME/.config/execp_logs
+    set log_file "$HOME/.config/execp_logs/$argv[1].log"
+    printf "\n\n--------------------(%s)--------------------\n\n" >> $log_file
+    setsid $argv > $log_file 2>&1 &
+end
+
+function execpl_daemonize
+    mkdir -p $HOME/.config/execp_logs
+    set log_file "$HOME/.config/execp_logs/$argv[1].log"
+    printf "\n\n--------------------(date)--------------------\n\n" >> $log_file
+    daemonize -o $log_file -e $log_file $argv
+end
+
+# function execpl_subshell
+#     mkdir -p $HOME/.config/execp_logs
+#     set log_file "$HOME/.config/execp_logs/$argv[1].log"
+#     printf "\n\n--------------------(date)--------------------\n\n" >> $log_file
+#     ( $argv > $log_file 2>&1 & )
+# end
+
+function execpl_systemd
+    mkdir -p $HOME/.config/execp_logs
+    set log_file "$HOME/.config/execp_logs/$argv[1].log"
+    printf "\n\n--------------------(date)--------------------\n\n" >> $log_file
+    systemd-run --user --unit=$argv[1] --output=file:$log_file $argv
+end
+
+
+
+alias execpl="execpl_disown"
+
 
 
 alias svim="sudo -E nvim"

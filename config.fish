@@ -66,14 +66,13 @@ end
 
 function git_push_all
     # Commit and push changes in submodules
-    echo "Processing all submodules..."
+    printf "Processing all submodules...\n\n"
     git submodule foreach --recursive '
-		printf -- "\nn__________________________________________\n"
         echo "Updating submodule $name..."
         git add .
         git commit -m "super push, root git dir and all submodules" || echo "No changes to commit in $name"
         git push origin $(git branch --show-current)
-		printf -- "\n\n"
+		printf -- "________________________________\n\n"
     '
 
     # Commit and push changes in the current repository

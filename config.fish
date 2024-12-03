@@ -42,20 +42,14 @@ alias lg="lazygit"
 
 
 #atuin init fish --disable-ctrl-r --disable-up-arrow | source
+
+#------------------------------GIT ALIAS and functions
 alias ga="git add ."
 alias gdf="git diff --name-only"
 function gc
 	git commit -m "$argv"
 end
 
-alias gcm="gc"
-alias git_file_diff="git diff --name-only HEAD"
-alias gfd="git_file_diff"
-
-alias gpd="git push origin desktop"
-alias gpl="git push origin laptop"
-alias gpm="git push origin master"
-alias gpmn="git push origin main"
 
 function gcl
 	cd ~/.config
@@ -87,7 +81,19 @@ function git_push_all
     git push origin (git branch --show-current)
 end
 
+alias gcm="gc"
+alias git_file_diff="git diff --name-only HEAD"
+alias gfd="git_file_diff"
 
+alias gpd="git push origin desktop"
+alias gpl="git push origin laptop"
+alias gpm="git push origin master"
+alias gpmn="git push origin main"
+
+alias gpa=git_push_all
+
+
+#---------------------------------END OF GIT----------------------
 #This is to get the n_th element of a bash array. (counts starts at 1)
 # So echo "aaa bbb ccc" | get 2 = "bbb" 
 function get

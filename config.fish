@@ -63,6 +63,19 @@ function gcd
 	cd -
 end
 
+function git_do_all
+    if test (count $argv) -eq 0
+        echo "Usage: git_do_all <commit_message>"
+        return 1
+    end
+
+    set commit_msg $argv[1]
+    git add .
+    git commit -m "$commit_msg"
+    git push origin (git branch --show-current)
+end
+
+
 
 
 
@@ -100,6 +113,21 @@ function git_push_all
     git_push_all_msg "super push, root git dir and all submodules"
 end
 
+function git_pull_all
+    # Check if a commit message is provided
+
+    # Extract the commit message
+
+    # Commit and push changes in submodules
+    printf "Processing all submodules...\n"
+    printf "________________________________\n\n"
+    git submodule foreach --recursive '
+        echo "Updating submodule $name..."
+        git pull origin $(git branch --show-current)
+        printf -- "________________________________\n\n"
+    '
+
+end
 alias gcm="gc"
 alias git_file_diff="git diff --name-only HEAD"
 alias gfd="git_file_diff"
@@ -111,6 +139,8 @@ alias gpmn="git push origin main"
 
 alias gpam="git_push_all_msg"
 alias gpa="git_push_all"
+
+alias gda="git_do_all"
 
 
 #---------------------------------END OF GIT----------------------
@@ -435,7 +465,7 @@ alias nls="nu -c 'ls'"
 alias ch='cd ~'
 alias cco="cd ~/.config"
 alias ce="cd ~/.config/eww"
-alias cir="cd ~/.config/fish"
+alias cf="cd ~/.config/fish"
 alias cH="cd ~/.config/hypr"
 alias chy="cd ~/.config/hypr"
 alias cir="cd ~/.config/ironbar"

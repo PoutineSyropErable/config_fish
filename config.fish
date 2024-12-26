@@ -113,21 +113,6 @@ function git_push_all
     git_push_all_msg "super push, root git dir and all submodules"
 end
 
-function git_pull_all
-    # Check if a commit message is provided
-
-    # Extract the commit message
-
-    # Commit and push changes in submodules
-    printf "Processing all submodules...\n"
-    printf "________________________________\n\n"
-    git submodule foreach --recursive '
-        echo "Updating submodule $name..."
-        git pull origin $(git branch --show-current)
-        printf -- "________________________________\n\n"
-    '
-
-end
 
 
 function git_commit_all
@@ -149,6 +134,24 @@ function git_commit_all
     git commit -m "$commit_msg"
     git push origin (git branch --show-current)
 end
+
+function git_pull_all
+    # Check if a commit message is provided
+
+    # Extract the commit message
+
+    # Commit and push changes in submodules
+    printf "Processing all submodules...\n"
+    printf "________________________________\n\n"
+    git submodule foreach --recursive '
+        echo "Updating submodule $name..."
+        git pull origin $(git branch --show-current)
+        printf -- "________________________________\n\n"
+    '
+
+end
+
+
 
 
 alias gcm="gc"

@@ -128,6 +128,29 @@ function git_pull_all
     '
 
 end
+
+
+function git_commit_all
+    # Check if a commit message is provided
+
+    # Extract the commit message
+
+    # Commit and push changes in submodules
+    printf "Processing all submodules...\n"
+    printf "________________________________\n\n"
+    git submodule foreach --recursive '
+        echo "Updating submodule $name..."
+		git add .
+		git commit -m "all update commit"
+        printf -- "________________________________\n\n"
+    '
+
+    git add .
+    git commit -m "$commit_msg"
+    git push origin (git branch --show-current)
+end
+
+
 alias gcm="gc"
 alias git_file_diff="git diff --name-only HEAD"
 alias gfd="git_file_diff"

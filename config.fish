@@ -4,10 +4,11 @@ if status is-interactive
 end
 ###
 thefuck --alias | source
-alias f="fuck"
+# alias f="fuck"
 atuin init fish --disable-up-arrow | source
 # starship init fish | source
 source ~/.config/lf/lf.fish
+zoxide init fish | source
 
 
 # Alias to enable core dumps and set core dump pattern
@@ -251,6 +252,7 @@ alias v="nvim"
 
 alias slf="sudo -E lf"
 alias fmod="vim ~/.config/fish/config.fish"
+alias zmod="nvim ~/.zshrc"
 alias bmod="vim ~/.bashrc"
 alias kimod="vim ~/.config/kitty/kitty.conf"
 alias kamod="vim ~/.config/kanata/kanata.kbd"
@@ -419,6 +421,11 @@ alias pv="pythonvenv"
 
 function govenv
 	source $HOME/MainPython_Virtual_Environment/pip_venv/bin/activate.fish
+end
+
+
+function projvenv
+	source $HOME/MainPython_Virtual_Environment/project_venv/bin/activate.fish
 end
 
 function govenv3
@@ -597,6 +604,7 @@ end
 alias copy="c"
 alias pwc='echo -n $(pwd) | c'
 alias pwv="cd (p)"
+alias pwp="cd (p)"
 alias p="paste"
 alias prevc="history --max=1 | c"
 
@@ -626,7 +634,7 @@ function bdiff
 end
 
 
-zoxide init fish | source
+
 
 
 
@@ -766,6 +774,16 @@ function conda_activate
 	end
 end
 
+function conda_master
+	set conda_path "$HOME/miniconda3/bin/conda"
+	if test -x $conda_path
+		eval $conda_path "shell.fish" "hook" $argv | source
+		conda activate master_venv
+	else
+		echo "Error: Conda not found at $conda_path"
+	end
+end
+
 
 alias set_private="$HOME/.local/share/private/local/settings/set_private.sh"
 alias set_public="$HOME/.local/share/private/local/settings/set_public.sh"
@@ -778,5 +796,18 @@ alias set_public="$HOME/.local/share/private/local/settings/set_public.sh"
 #	mpd
 #end
 
+function show_mesh
+    # Ensure an argument is provided
+    if test (count $argv) -ne 1
+        echo "Usage: show_mesh <mesh_path>"
+        return 1
+    end
+
+    # Define the script path
+    set script_path "/home/francois/Documents/University (Real)/Semester 9/Comp 400/RealProject/show_mesh.py"
+
+    # Execute the Python script with the provided mesh_path argument
+    python3 $script_path $argv[1]
+end
 
 eval (tmuxifier init - fish)

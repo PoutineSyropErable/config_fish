@@ -763,8 +763,19 @@ end
 #conda activate venv
 
 
+
+
 # Function to activate Conda environments
 function conda_activate
+	set conda_path "$HOME/miniconda3/bin/conda"
+	if test -x $conda_path
+		eval $conda_path "shell.fish" "hook" $argv | source
+	else
+		echo "Error: Conda not found at $conda_path"
+	end
+end
+
+function conda_venv
 	set conda_path "$HOME/miniconda3/bin/conda"
 	if test -x $conda_path
 		eval $conda_path "shell.fish" "hook" $argv | source

@@ -499,6 +499,7 @@ alias ch='cd ~'
 alias cco="cd ~/.config"
 alias ce="cd ~/.config/eww"
 alias cf="cd ~/.config/fish"
+alias cz="cd ~/.config/zsh"
 alias cH="cd ~/.config/hypr"
 alias chy="cd ~/.config/hypr"
 alias cir="cd ~/.config/ironbar"

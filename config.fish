@@ -304,14 +304,14 @@ alias theme="kitty +kitten themes"
 alias updatelocate="sudo updatedb"
 
 function package_finder
-	echo "Changing shell to Bash..."
-	sudo chsh -s /bin/bash
+	# echo "Changing shell to Bash..."
+	# sudo chsh -s /bin/bash
 
 	echo "Running fpf -a..."
 	fpf -a
 
-	echo "Changing shell back to Fish..."
-	sudo chsh -s /bin/fish
+	# echo "Changing shell back to Fish..."
+	# sudo chsh -s /bin/fish
 end
 #this is a fuzzy package finder
 
@@ -715,7 +715,7 @@ export PATH="$HOME/.config/conky:$PATH"
 export PATH="$HOME/.config/polybar.old/:$PATH"
 export PATH="$HOME/.config/polybar/:$PATH"
 
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 export PATH_TO_FX="/usr/lib/jvm/javafx-sdk-17.0.13/lib"
 export PATH="$JAVA_HOME/bin:$PATH"
 

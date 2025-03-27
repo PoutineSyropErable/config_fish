@@ -416,31 +416,31 @@ function fcdn
 end
 
 
-alias pythonvenv="$HOME/MainPython_Virtual_Environment/pip_venv/bin/python"
+alias pythonvenv="$HOME/PythonVenv/pip_venv/bin/python"
 alias pv="pythonvenv"
 
 function govenv
-	source $HOME/MainPython_Virtual_Environment/pip_venv/bin/activate.fish
+	source $HOME/PythonVenv/pip_venv/bin/activate.fish
 end
 
 
 function projvenv
-	source $HOME/MainPython_Virtual_Environment/project_venv/bin/activate.fish
+	source $HOME/PythonVenv/project_venv/bin/activate.fish
 end
 
 function govenv3
-	source $HOME/MainPython_Virtual_Environment/pip3_venv/bin/activate.fish
+	source $HOME/PythonVenv/pip3_venv/bin/activate.fish
 end
 
 function govenvt
-	source $HOME/MainPython_Virtual_Environment/venv_test/bin/activate.fish
+	source $HOME/PythonVenv/venv_test/bin/activate.fish
 end
 alias searchdir="rg --files | fzf"
 alias sdir="searchdir"
 
 function pvp1
 	echo "Control+Shift+p Python: Select Interpreter, Enter Interpreter path"
-	echo -n "$HOME/MainPython_Virtual_Environment/pip_venv/bin/python" | c 
+	echo -n "$HOME/PythonVenv/pip_venv/bin/python" | c 
 	echo "The path of the python interpreter is now inside your clipboard. Just Control v it"
 end
 
